@@ -1,2 +1,1 @@
-# django_realstateapp
-# betoch_django
+# django_betoch
