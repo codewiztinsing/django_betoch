@@ -1,0 +1,2 @@
+gunicorn for hosting
+whitenoise for static file manament
