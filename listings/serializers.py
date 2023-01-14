@@ -5,10 +5,12 @@ from .models import Listing
 
 class ListingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Listing
+        model  = Listing
         fields = [
+            'id',
             'title',
             'city',
+            'slug',
             'address',
             'state',
             'home_type',
@@ -16,12 +18,15 @@ class ListingSerializer(serializers.ModelSerializer):
             'bed_rooms',
             'bath_rooms',
             'sqrt',
+            'ratings',
+            'avgRating',
+            'oldPrice',
             'slug',
             'published',
             'description',
             'price',
             'get_image',
-            # 'images',
+            'images',
             'date_added',
             ]
 

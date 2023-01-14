@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 
 class Realtor(models.Model):
+	user        = models.ForeignKey('accounts.UserAccount',null = True,on_delete = models.CASCADE)
 	name        = models.CharField(max_length = 25)
 	photo       = models.ImageField(upload_to= 'photos/%Y/%m/%d')
 	description = models.TextField()
