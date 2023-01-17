@@ -36,6 +36,10 @@ class SearchView(APIView):
 		home_type = data['home_type'] 
 		city = data['city']  
 		
+		if not home_type and not city:
+			queryset = Listing.objects.filter(published = True)
+
+			
 		if home_type:
 			queryset = queryset.filter(home_type = home_type) 
 

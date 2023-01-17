@@ -31,7 +31,7 @@ class Listing(models.Model):
     published     = models.BooleanField(default = False)
     sale_type     = models.CharField(max_length = 10,choices = SaleType.choices,default = SaleType.FOR_SALE)
     bed_rooms     = models.IntegerField()
-    bath_rooms    = models.DecimalField(max_digits = 4,decimal_places = 2)
+    bath_rooms    = models.IntegerField(default = 0)
     sqrt          = models.DecimalField(max_digits = 4,decimal_places = 2)
     home_type     = models.CharField(max_length = 10,choices = HomeType.choices,default = HomeType.CONDO)
     description   = models.TextField(blank=True, null=True)
@@ -41,10 +41,10 @@ class Listing(models.Model):
     image         = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
     image_1       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
     image_2       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
-    # image_3       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
-    # image_4       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
-    # image_5       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
-    date_added 	  = models.DateTimeField(auto_now_add=True)
+    image_3       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
+    image_4       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
+    image_5       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
+    date_added    = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural="Listings"
@@ -65,19 +65,14 @@ class Listing(models.Model):
     def images(self):
 
         return [
-            'http://127.0.0.1:8000' + self.image_1.url if self.image_1.url else 'http://127.0.0.1:8000' + self.image.url,
-            'http://127.0.0.1:8000' + self.image_2.url if self.image_2.url else 'http://127.0.0.1:8000' + self.image.url
-            # 'http://127.0.0.1:8000' + self.image_3.url if self.image_3.url else 'http://127.0.0.1:8000' + self.image.url
+            'http://10.0.3.2:8000' + self.image_1.url if self.image_1.url else 'http://10.0.3.2:8000' + self.image.url,
+            'http://10.0.3.2:8000' + self.image_1.url if self.image_1.url else 'http://10.0.3.2:8000' + self.image.url,
+            'http://10.0.3.2:8000' + self.image_2.url if self.image_2.url else 'http://10.0.3.2:8000' + self.image.url,
+            # 'http://10.0.3.2:8000' + self.image_3.url if self.image_3.url else 'http://10.0.3.2:8000' + self.image.url,
 
 
             ]
-        # return [
-        #         'http://127.0.0.1:8000' + self.image_1.url if self.image_1.url else 'http://127.0.0.1:8000' + self.image.url,
-        #         'http://127.0.0.1:8000' + self.image_2.url if self.image_1.url else 'http://127.0.0.1:8000' + self.image.url,
-        #         'http://127.0.0.1:8000' + self.image_3.url if self.image_3.url else 'http://127.0.0.1:8000' + self.image.url
-        #        #  'http://127.0.0.1:8000' + self.image_4.url if self.image_4.url else 'http://127.0.0.1:8000' + self.image.url,
-        #        # 'http://127.0.0.1:8000' + self.image_5.url if self.image_5.url else 'http://127.0.0.1:8000' + self.image.url,
-        #         ]
+
     
     def get_absolute_url(self):
         return f'/api/v1/listings/{self.slug}/'
@@ -85,7 +80,7 @@ class Listing(models.Model):
     @property
     def get_image(self):
         if self.image:
-            return 'http://127.0.0.1:8000' + self.image.url + '/'
+            return 'http://10.0.3.2:8000' + self.image.url + '/'
         return ''
 
     

@@ -5,24 +5,35 @@ from house.models import House
 
 
 class Order(models.Model):
-    id          = models.IntegerField(primary_key = True,default = 100)
-    user        = models.ForeignKey('accounts.UserAccount', related_name='orders', on_delete=models.CASCADE)
-    first_name  = models.CharField(max_length=100)
-    last_name   = models.CharField(max_length=100)
+
+    class OrderStatus(models.TextChoices):
+        PAID  = ("Paid",)
+        UNPAID = ("Unpaid",)
+
+    realtor     = models.ForeignKey('realtors.Realtor',
+         related_name='realtor_orders', null = True,on_delete=models.CASCADE)
+    listing     = models.ForeignKey('listings.Listing',
+        related_name= "ordered_listing", 
+        on_delete = models.CASCADE,
+        null = True,
+        unique = True)
+    name        = models.CharField(max_length=100)
+    # last_name   = models.CharField(max_length=100)
     email       = models.CharField(max_length=100)
-    address     = models.CharField(max_length=100)
-    zipcode     = models.CharField(max_length=100)
+    address     = models.CharField(max_length=100,null = True)
+    # zipcode     = models.CharField(max_length=100)
     place       = models.CharField(max_length=100)
     phone       = models.CharField(max_length=100)
     created_at  = models.DateTimeField(auto_now_add=True)
-    paid_amount = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    status      = models.CharField(max_length = 10,choices = OrderStatus.choices,default = OrderStatus.UNPAID)
+    # paid_amount = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     # stripe_token = models.CharField(max_length=100)
 
     class Meta:
         ordering = ['-created_at',]
     
     def __str__(self):
-        return self.first_name
+        return self.name
 
 class OrderItem(models.Model):
     id = models.IntegerField(primary_key = True,default = 10000000)
